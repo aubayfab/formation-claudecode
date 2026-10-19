@@ -1,0 +1,7 @@
+{
+  "tournoi": "Arcade Cup",
+  "saison": "2026+",
+  "reglesSupplementaires": [
+    "Mode entraînement homologué : pendant une partie de snake, maintenir la touche Ctrl ralentit le serpent de 70 %"
+  ]
+}

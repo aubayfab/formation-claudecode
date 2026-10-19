@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "type": "command",
+        "command": "node .github/hooks/proteger-tp.mjs"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "node .github/hooks/proteger-tp.mjs"
+      }
+    ]
+  }
+}

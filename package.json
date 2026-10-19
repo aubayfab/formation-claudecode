@@ -1,0 +1,26 @@
+{
+  "name": "arcade",
+  "version": "1.0.0",
+  "description": "Arcade rétro dans le navigateur.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n arcade,sink \"vite\" \"node mcp/sink.mjs\"",
+    "build": "tsc && vite build",
+    "test": "vitest run",
+    "lint": "prettier --check .",
+    "sink": "node mcp/sink.mjs"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@types/node": "^22.20.5",
+    "concurrently": "^9.1.0",
+    "prettier": "^3.9.7",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.6",
+    "vitest": "^4.1.11"
+  }
+}
