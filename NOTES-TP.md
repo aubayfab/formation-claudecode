@@ -46,7 +46,7 @@ Problèmes rencontrés :
 
 > La skill a-t-elle été chargée ?
 
-> Sous quel nom apparaît-elle ? Quelle description l’accompagne ?
+> Sous quel nom la skill apparaît-elle dans le menu, et quelle description l’accompagne ?
 
 > Lancée depuis le menu, que fait l’agent ? Pourquoi l’appel manuel fonctionne-t-il ?
 
