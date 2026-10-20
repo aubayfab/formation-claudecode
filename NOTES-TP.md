@@ -50,6 +50,10 @@ Problèmes rencontrés :
 
 > Lancée depuis le menu, que fait l’agent ? Pourquoi l’appel manuel fonctionne-t-il ?
 
+> Le classement rendu à l’étape 1, puis après correction :
+
+> Votre description corrigée :
+
 > Après correction, la skill se déclenche-t-elle ? Le classement a-t-il changé depuis l’étape 1 ?
 
 > L’agent a-t-il ouvert format-2025.md ? Et pour une question sur 2025 ?
