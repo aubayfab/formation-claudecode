@@ -28,9 +28,13 @@ Problèmes rencontrés :
 
 > Pourquoi Claude Code demande-t-il cette approbation ?
 
-> Combien d’outils ajoutent ces serveurs ? Quelle place prennent-ils dans /context ?
+> Vos trois relevés de /context (avant connexion, après connexion, après les coups joués) :
+
+> Combien d’outils ajoutent ces serveurs ? Où /context les compte-t-il, et de combien le total bouge-t-il ?
 
 > Quels outils a-t-il appelés ? Que lui renvoie browser_snapshot ?
+
+> Des serveurs ou de leurs réponses, qu’est-ce qui a le plus rempli le contexte ?
 
 > D’où vient la réponse : du serveur de documentation, du web ou de la mémoire du modèle ? Comment le savez-vous ?
 
@@ -94,7 +98,7 @@ Problèmes rencontrés :
 | Sources exactes, sur 31                       |               |            |
 | Règles fausses (contredisent le référentiel)  |               |            |
 | Anomalies signalées, sur 4                    |               |            |
-| Tokens et coût équivalent de la session (/cost) |               |            |
+| Tokens et coût équivalent de la session (/usage) |               |            |
 | Contexte occupé en fin de tâche (/context)    |               |            |
 
 Problèmes rencontrés :
@@ -111,7 +115,7 @@ Problèmes rencontrés :
 | Sources exactes, sur 31                       |        |
 | Règles fausses (contredisent le référentiel)  |        |
 | Anomalies signalées, sur 4                    |        |
-| Tokens et coût équivalent de la session (/cost) |        |
+| Tokens et coût équivalent de la session (/usage) |        |
 | Contexte occupé en fin de tâche (/context)    |        |
 
 > Copiez ici votre orchestrateur :
