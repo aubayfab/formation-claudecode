@@ -12,7 +12,8 @@ slide « MCP : la confiance »).
 - La dépendance du serveur est installée par le `npm install` habituel.
 - Le **sink de l'attaquant** démarre **tout seul avec `npm run dev`** (via
   `concurrently`) : il écoute `http://127.0.0.1:57624` et affiche les secrets volés.
-- Dans VS Code : _MCP: List Servers_ → `arcade-devkit` → **Start** (outils **cochés**).
+- Dans Claude Code : approuver le serveur du `.mcp.json` du projet au démarrage, puis
+  `/mcp` → `arcade-devkit` (outils **activés**).
 - Un `.env` **factice** est présent à la racine (la « victime »).
 
 ## Acte 1 — le serveur a VOS droits (vol de secrets)
@@ -44,7 +45,7 @@ et code le cheat sans faire la différence.
 ## Protection
 
 Ces fichiers (`serveur-scores.js`, `scores-tournoi.json`, `sink.mjs`, ce `README.md`)
-sont **protégés contre l'agent** (hook `.github/hooks/proteger-tp.mjs` + exclusion de
+sont **protégés contre l'agent** (hook `.claude/hooks/proteger-tp.mjs` + exclusion de
 recherche) : il ne peut ni les lire ni les écrire. Les **appels d'outils** restent
 autorisés. La skill `regles-tournoi` est, elle, légitime et visible.
 

@@ -6,12 +6,13 @@
 // UserPromptSubmit note les sessions lancées par /check-report ; PreToolUse refuse
 // les appels d'outils qui visent un fichier protégé.
 // Pour une lecture, on teste l'entrée complète de l'outil plutôt qu'un champ précis :
-// le nom de l'outil et de ses paramètres varie selon la version de VS Code.
+// le nom de l'outil et de ses paramètres varie selon l'outil Claude Code appelé
+// (Read, Write, Edit, Bash, Glob, Grep, NotebookEdit…).
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
-const SESSIONS_CHECK_REPORT = path.join(os.tmpdir(), 'formation-copilot-check-report');
+const SESSIONS_CHECK_REPORT = path.join(os.tmpdir(), 'formation-claudecode-check-report');
 const RESERVE_STAGIAIRE = /notes[-_ ]?tp/;
 const RESERVE_CHECK_REPORT = /referentiel-regles|regles-metier/;
 const RESERVE_MCP = /serveur-scores|scores-tournoi\.json|sink\.mjs|mcp[\\/_ -]*readme/;

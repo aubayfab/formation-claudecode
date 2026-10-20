@@ -1,9 +1,8 @@
 ---
 description: Vérifie un livrable de rétro-documentation et prépare la grille à coller dans NOTES-TP.md.
 argument-hint: livrable(s) à vérifier, ex. « docs/règles-métier-agent-seul.md »
-agent: agent
-model: Claude Sonnet 5 (copilot)
-tools: ['read', 'search/listDirectory', 'search/fileSearch', 'web/fetch']
+model: sonnet
+allowed-tools: Read, Glob, Grep, WebFetch
 ---
 
 Tu es correcteur. Tu compares un livrable de rétro-documentation du module Snake
@@ -15,8 +14,8 @@ Tu es correcteur. Tu compares un livrable de rétro-documentation du module Snak
   https://github.com/aubayfab/formation-githubcopilot/raw/refs/heads/resources/referentiel-regles-snake.md
   Si la page est inaccessible ou n'affiche pas le référentiel, arrête-toi et
   indique un problème technique pour accéder au référentiel de règles. N'écris le référentiel dans aucun fichier.
-- **Livrables** : ceux que cite ou joint la demande. À défaut, tous les fichiers
-  `docs/règles-métier*.md`.
+- **Livrables** : ceux que cite la demande : $ARGUMENTS. Si cette liste est vide,
+  tous les fichiers `docs/règles-métier*.md`.
 - **Colonne** : le nom de colonne donné pour chaque livrable dans la demande, sinon
   le nom du fichier.
 
