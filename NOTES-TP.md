@@ -72,11 +72,15 @@ Problèmes rencontrés :
 
 > Copiez ici le contenu du report.md :
 
+Problèmes rencontrés :
+
 # TP N°8 – Des actions approuvées
 
 > Copiez ici vos permissions pour le terminal :
 
 > Copiez ici vos permissions pour le web :
+
+Problèmes rencontrés :
 
 # TP N°9 – Un spécialiste
 
@@ -90,7 +94,8 @@ Problèmes rencontrés :
 | Sources exactes, sur 31                       |               |            |
 | Règles fausses (contredisent le référentiel)  |               |            |
 | Anomalies signalées, sur 4                    |               |            |
-| Crédits IA consommés                          |               |            |
+| Tokens et coût équivalent de la session (/cost) |               |            |
+| Contexte occupé en fin de tâche (/context)    |               |            |
 
 Problèmes rencontrés :
 
@@ -106,7 +111,8 @@ Problèmes rencontrés :
 | Sources exactes, sur 31                       |        |
 | Règles fausses (contredisent le référentiel)  |        |
 | Anomalies signalées, sur 4                    |        |
-| Crédits IA consommés                          |        |
+| Tokens et coût équivalent de la session (/cost) |        |
+| Contexte occupé en fin de tâche (/context)    |        |
 
 > Copiez ici votre orchestrateur :
 
@@ -167,6 +173,8 @@ Problèmes rencontrés :
 > Pourquoi cette lecture a échoué, d’où sort ce hook ?
 
 > Quelles modifications cette skill a-t-elle automatisées ?
+
+Problèmes rencontrés :
 
 # TP N°15 – Faites votre propre MCP
 
