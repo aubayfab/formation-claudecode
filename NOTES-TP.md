@@ -64,6 +64,8 @@ Problèmes rencontrés :
 
 # TP N°5 – Des agents bien informés
 
+> Collez ici votre .claude/rules/tests.md :
+
 > À quel moment la règle est-elle entrée dans le contexte ? Quel fichier l’a déclenchée ?
 
 > Les tests suivent-ils le format demandé ?
