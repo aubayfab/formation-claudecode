@@ -30,7 +30,7 @@ Problèmes rencontrés :
 
 > Vos trois relevés de /context (avant connexion, après connexion, après les coups joués) :
 
-> Combien d’outils ajoutent ces serveurs ? Où /context les compte-t-il, et de combien le total bouge-t-il ?
+> Combien d’outils ajoutent ces serveurs ? Où /context les compte-t-il ? De combien le total bouge-t-il ?
 
 > Quels outils a-t-il appelés ? Que lui renvoie browser_snapshot ?
 
@@ -46,7 +46,7 @@ Problèmes rencontrés :
 
 > La skill a-t-elle été chargée ?
 
-> Sous quel nom la skill apparaît-elle dans le menu, et quelle description l’accompagne ?
+> Sous quel nom la skill apparaît-elle dans le menu ? Quelle description l’accompagne ?
 
 > Lancée depuis le menu, que fait l’agent ? Pourquoi l’appel manuel fonctionne-t-il ?
 
