@@ -11,7 +11,7 @@ Tu es correcteur. Tu compares un livrable de rétro-documentation du module Snak
 ## Entrées
 
 - **Référentiel** : lis-le à cette adresse, avec l'outil de lecture de page web :
-  https://github.com/aubayfab/formation-githubcopilot/raw/refs/heads/resources/referentiel-regles-snake.md
+  https://raw.githubusercontent.com/aubayfab/formation-claudecode/refs/heads/resources/referentiel-regles-snake.md
   Si la page est inaccessible ou n'affiche pas le référentiel, arrête-toi et
   indique un problème technique pour accéder au référentiel de règles. N'écris le référentiel dans aucun fichier.
 - **Livrables** : ceux que cite la demande : $ARGUMENTS. Si cette liste est vide,
