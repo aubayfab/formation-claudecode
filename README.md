@@ -42,19 +42,34 @@ de skill.
 ## Où les poser
 
 Un agent va dans `.claude/agents/<nom>.md` à la racine de votre dépôt de TP, une skill
-dans `.claude/skills/<nom>/SKILL.md`. Claude Code les charge au démarrage de la
-session suivante : ouvrez une nouvelle conversation après les avoir posés.
+dans `.claude/skills/<nom>/SKILL.md`.
 
-Pour vérifier qu'ils sont vus, `/agents` liste les sous-agents et `/skills` les
+Claude Code surveille ces deux dossiers : il prend en compte un fichier ajouté en cours
+de session au bout de quelques secondes, sans redémarrage. Il ne surveille pas un
+dossier créé après le lancement de la session. Or le dépôt de TP n’a pas de dossier
+`.claude/agents/` au départ : après avoir posé votre premier agent, quittez Claude Code
+et relancez-le.
+
+Pour vérifier qu’ils sont vus, `/agents` liste les sous-agents et `/skills` les
 skills.
 
-## Télécharger un seul fichier
+## Télécharger un fichier
 
-Depuis la racine de votre dépôt de TP :
+Depuis la racine de votre dépôt de TP, récupérez la branche une fois pour toutes :
 
 ```sh
-curl -o .claude/agents/explorateur.md \
-  https://github.com/aubayfab/formation-claudecode/raw/refs/heads/resources/.claude/agents/explorateur.md
+git fetch origin resources
 ```
 
-Ou, plus simplement, ouvrez le fichier sur GitHub et copiez son contenu.
+puis posez chaque fichier dont vous avez besoin, au même chemin que sur la branche :
+
+```sh
+git restore --source=origin/resources -- .claude/agents/explorateur.md
+```
+
+Le fichier arrive dans votre copie de travail, sans être ajouté à l’index. Pour un
+dossier entier, donnez son chemin, par exemple `evaluation/`.
+
+Vous pouvez aussi ouvrir le fichier sur GitHub, cliquer sur **Raw** et copier son
+contenu. Si `curl` échoue avec l’erreur `CRYPT_E_NO_REVOCATION_CHECK`, votre poste ne
+parvient pas à vérifier la révocation du certificat : passez par git.
