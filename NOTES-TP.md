@@ -86,9 +86,11 @@ Problèmes rencontrés :
 
 # TP N°8 – Des actions approuvées
 
-> Copiez ici vos permissions pour le terminal :
+> Lesquelles des trois actions vous ont demandé un accord à la vérification initiale, et lesquelles sont passées sans rien demander ?
 
-> Copiez ici vos permissions pour le web :
+> Copiez ici vos trois règles de permission :
+
+> Dans quel fichier /permissions les a-t-il rangées ?
 
 Problèmes rencontrés :
 
@@ -104,7 +106,7 @@ Problèmes rencontrés :
 | Sources exactes, sur 31                       |               |            |
 | Règles fausses (contredisent le référentiel)  |               |            |
 | Anomalies signalées, sur 4                    |               |            |
-| Tokens et coût équivalent de la session (/usage) |               |            |
+| Coût relatif de la session (1er essai = 1)     |               |            |
 | Contexte occupé en fin de tâche (/context)    |               |            |
 
 Problèmes rencontrés :
@@ -121,7 +123,7 @@ Problèmes rencontrés :
 | Sources exactes, sur 31                       |        |
 | Règles fausses (contredisent le référentiel)  |        |
 | Anomalies signalées, sur 4                    |        |
-| Tokens et coût équivalent de la session (/usage) |        |
+| Coût relatif de la session (1er essai = 1)    |        |
 | Contexte occupé en fin de tâche (/context)    |        |
 
 > Copiez ici votre orchestrateur :
@@ -144,7 +146,7 @@ Problèmes rencontrés :
 
 > Quel est le comportement de l’agent quand on lui demande de lire le fichier ?
 
-> Quel est le comportement de l’agent avec la commande Get-Content ?
+> Quel est le comportement de l’agent avec cette commande shell ? Pourquoi diffère-t-il du précédent ?
 
 > Quelles sont les pistes de résolution ?
 
