@@ -5,9 +5,10 @@
 // - mcp-scores/scores.json, les scores de la borne : les agents passent par le serveur MCP.
 // UserPromptSubmit note les sessions lancées par /check-report ; PreToolUse refuse
 // les appels d'outils qui visent un fichier protégé.
-// Pour une lecture, on teste l'entrée complète de l'outil plutôt qu'un champ précis :
-// le nom de l'outil et de ses paramètres varie selon l'outil Claude Code appelé
-// (Read, Write, Edit, Bash, Glob, Grep, NotebookEdit…).
+// Pour une lecture, on teste les chemins, commandes, motifs et URL de l'appel, pas son
+// texte libre : la description d'une commande Bash, une liste de tâches ou le prompt d'un
+// sous-agent peuvent citer un fichier protégé sans le lire. Si l'entrée de l'outil n'est
+// pas un objet, on teste l'entrée complète.
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -46,11 +47,17 @@ function normaliser(texte) {
 // Le contenu écrit n'est pas testé : un rapport peut citer NOTES-TP ou le référentiel.
 function fichiersEcrits(valeur, cle = '') {
   if (typeof valeur === 'string') {
-    const entetes = [...valeur.matchAll(/\*\*\* (?:add|update|delete) file: (.+)/gi)].map((m) => m[1]);
-    return /path|uri|file/i.test(cle) && !/text|content|string|body/i.test(cle) ? [valeur, ...entetes] : entetes;
+    const entetes = [...valeur.matchAll(/\*\*\* (?:add|update|delete) file: (.+)/gi)].map(
+      (m) => m[1],
+    );
+    return /path|uri|file/i.test(cle) && !/text|content|string|body/i.test(cle)
+      ? [valeur, ...entetes]
+      : entetes;
   }
   if (valeur && typeof valeur === 'object') {
-    return Object.entries(valeur).flatMap(([k, v]) => fichiersEcrits(v, Array.isArray(valeur) ? cle : k));
+    return Object.entries(valeur).flatMap(([k, v]) =>
+      fichiersEcrits(v, Array.isArray(valeur) ? cle : k),
+    );
   }
   return [];
 }
@@ -60,10 +67,12 @@ function fichiersEcrits(valeur, cle = '') {
 // tester toute l'entrée de l'outil bloquerait la génération du serveur.
 function cheminsEtCommandes(valeur, cle = '') {
   if (typeof valeur === 'string') {
-    return /command|query|pattern/i.test(cle) ? [valeur] : fichiersEcrits(valeur, cle);
+    return /command|query|pattern|glob|url/i.test(cle) ? [valeur] : fichiersEcrits(valeur, cle);
   }
   if (valeur && typeof valeur === 'object') {
-    return Object.entries(valeur).flatMap(([k, v]) => cheminsEtCommandes(v, Array.isArray(valeur) ? cle : k));
+    return Object.entries(valeur).flatMap(([k, v]) =>
+      cheminsEtCommandes(v, Array.isArray(valeur) ? cle : k),
+    );
   }
   return [];
 }
@@ -111,21 +120,30 @@ function viseScoresBorne(evenement) {
 }
 
 function controlerAppel(evenement, texte, fichier) {
+  const parametres = lireParametres(evenement);
+  const lu =
+    parametres && typeof parametres === 'object'
+      ? normaliser(cheminsEtCommandes(parametres).join('\n'))
+      : texte;
   if (viseScoresBorne(evenement)) {
-    refuser('Scores de la borne : les agents passent par les outils du serveur MCP, pas par le fichier.');
+    refuser(
+      'Scores de la borne : les agents passent par les outils du serveur MCP, pas par le fichier.',
+    );
   } else if (OUTIL_ECRITURE.test(String(evenement.tool_name ?? evenement.toolName ?? ''))) {
     const cibles = fichiersEcrits(lireParametres(evenement));
-    if (RESERVE_STAGIAIRE.test(cibles.length ? normaliser(cibles.join('\n')) : texte)) {
+    if (RESERVE_STAGIAIRE.test(cibles.length ? normaliser(cibles.join('\n')) : lu)) {
       refuser('Fichier réservé au stagiaire : les agents ne doivent pas le modifier.');
-    } else if (RESERVE_MCP.test(cibles.length ? normaliser(cibles.join('\n')) : texte)) {
+    } else if (RESERVE_MCP.test(cibles.length ? normaliser(cibles.join('\n')) : lu)) {
       refuser('Fichier interne du serveur MCP : les agents ne doivent pas le modifier.');
     }
-  } else if (RESERVE_STAGIAIRE.test(texte)) {
+  } else if (RESERVE_STAGIAIRE.test(lu)) {
     refuser('Fichier réservé au stagiaire : les agents ne doivent pas le lire.');
-  } else if (RESERVE_MCP.test(texte)) {
+  } else if (RESERVE_MCP.test(lu)) {
     refuser('Fichier interne du serveur MCP : les agents ne doivent pas le lire.');
-  } else if (RESERVE_CHECK_REPORT.test(texte) && !(fichier && fs.existsSync(fichier))) {
-    refuser('Fichier réservé à /check-report (référentiel ou rapport) : les agents ne doivent pas le lire.');
+  } else if (RESERVE_CHECK_REPORT.test(lu) && !(fichier && fs.existsSync(fichier))) {
+    refuser(
+      'Fichier réservé à /check-report (référentiel ou rapport) : les agents ne doivent pas le lire.',
+    );
   }
 }
 
