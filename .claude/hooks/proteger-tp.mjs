@@ -2,7 +2,8 @@
 // - NOTES-TP.md, la grille du stagiaire : aucun agent ne la lit ni ne l'écrit ;
 // - le référentiel des règles et les rapports (règles-métier*.md) : les agents écrivent
 //   leurs rapports, mais seule une session lancée par /check-report peut les lire ;
-// - mcp-scores/scores.json, les scores de la borne : les agents passent par le serveur MCP.
+// - mcp-scores/scores.json, les scores de la borne : les agents le lisent, mais ne le
+//   modifient jamais directement (outil d'écriture ou commande qui écrit dans le fichier).
 // UserPromptSubmit note les sessions lancées par /check-report ; PreToolUse refuse
 // les appels d'outils qui visent un fichier protégé.
 // Pour une lecture, on teste les chemins, commandes, motifs et URL de l'appel, pas son
@@ -27,6 +28,14 @@ const CHANGEMENT_VERS_MCP = /\b(?:cd|set-location|pushd|sl)\s+[^;\n|&]*mcp/;
 const CWD_MCP = /[\\/]mcp(?:-scores)?[\\/]*$/;
 const LANCEMENT_CHECK_REPORT = /\/check-report|tu es correcteur\. tu compares un livrable/;
 const OUTIL_ECRITURE = /create|replace|insert|edit|patch|write/i;
+// Commandes shell qui écrivent dans scores.json : redirection, édition en place, suppression,
+// déplacement, copie vers le fichier, écriture depuis un script. Une copie depuis le fichier reste une lecture.
+const ECRITURE_SCORES = [
+  /(>>?|\btee\b)\s*["']?[^\s;|&"']*scores\.json/,
+  /\b(sed\s+-i|set-content|add-content|out-file|clear-content|remove-item|rm|del|erase|mv|move|move-item|truncate)\b[^;|&\n]*scores\.json/,
+  /\b(cp|copy|copy-item)\b[^;|&\n]*\s["']?[^\s;|&"']*scores\.json["']?\s*(?:$|[;|&\n])/,
+  /(writefile|appendfile|write_text|json\.dump|open\([^)]*scores\.json[^)]*['"][wa])/,
+];
 
 // Chemins encodés en URI, accents : « r%C3%A8gles-m%C3%A9tier » devient « regles-metier ».
 function normaliser(texte) {
@@ -125,11 +134,14 @@ function controlerAppel(evenement, texte, fichier) {
     parametres && typeof parametres === 'object'
       ? normaliser(cheminsEtCommandes(parametres).join('\n'))
       : texte;
-  if (viseScoresBorne(evenement)) {
+  const outil = String(evenement.tool_name ?? evenement.toolName ?? '');
+  const commande = normaliser(String(parametres?.command ?? ''));
+  const ecrit = OUTIL_ECRITURE.test(outil) || ECRITURE_SCORES.some((motif) => motif.test(commande));
+  if (ecrit && viseScoresBorne(evenement)) {
     refuser(
-      'Scores de la borne : les agents passent par les outils du serveur MCP, pas par le fichier.',
+      'Scores de la borne : ce fichier est partagé avec la borne, les agents peuvent le lire mais ne le modifient pas directement.',
     );
-  } else if (OUTIL_ECRITURE.test(String(evenement.tool_name ?? evenement.toolName ?? ''))) {
+  } else if (OUTIL_ECRITURE.test(outil)) {
     const cibles = fichiersEcrits(lireParametres(evenement));
     if (RESERVE_STAGIAIRE.test(cibles.length ? normaliser(cibles.join('\n')) : lu)) {
       refuser('Fichier réservé au stagiaire : les agents ne doivent pas le modifier.');
