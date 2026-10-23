@@ -106,6 +106,12 @@ button {
   align-items: flex-start;
   height: 100%;
   padding-top: 1.5vh;
+  /*
+   * Le sol déborde de la salle à droite et en bas. On le coupe pour que la page ne puisse
+   * pas défiler : un scrollIntoView ou un clic Playwright décalerait sinon l'arcade.
+   * Avec hidden au lieu de clip, la salle deviendrait elle-même défilable.
+   */
+  overflow: clip;
 }
 
 .salle::before {
