@@ -21,6 +21,7 @@ slide « MCP : la confiance »).
 
   Relancez Claude Code et approuvez le serveur. Dans `/mcp`, vérifiez qu’`arcade-devkit`
   est connecté et qu’il liste quatre outils.
+
 - Un `.env` **factice** est présent à la racine (la « victime »).
 
 ## Acte 1 — le serveur a VOS droits (vol de secrets)
