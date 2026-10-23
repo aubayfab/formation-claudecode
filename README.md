@@ -28,8 +28,6 @@ claude plugin list
 
 Dans une session, `/plugin marketplace add aubayfab/formation-claudecode#marketplace` fait la même chose, et `/plugin` ouvre le catalogue pour parcourir et installer les plugins.
 
-Le dépôt est privé : Claude Code utilise l’identifiant que votre assistant d’authentification git conserve déjà, sans jamais en demander un. Si l’ajout échoue sur une erreur d’accès, lancez `gh auth login` puis `gh auth setup-git`, et recommencez.
-
 ### Pour toute une équipe
 
 Un dépôt peut recommander la marketplace et ses plugins à tous ceux qui l’ouvrent, dans `.claude/settings.json` :
