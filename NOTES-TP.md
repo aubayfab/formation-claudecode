@@ -44,19 +44,21 @@ Problèmes rencontrés :
 
 # TP N°4 – Des agents compétents
 
-> La skill a-t-elle été chargée ?
+> La skill a-t-elle été chargée ? Le classement vous paraît-il crédible ?
 
-> Sous quel nom la skill apparaît-elle dans le menu ? Quelle description l’accompagne ?
+> Quelles entrées viennent du dépôt ? Sous quel nom la skill apparaît-elle, avec quelle description ?
 
-> Lancée depuis le menu, que fait l’agent ? Pourquoi l’appel manuel fonctionne-t-il ?
+> Lancée sous ce nom, que fait l’agent ? Pourquoi l’appel manuel fonctionne-t-il ?
 
 > Le classement rendu à l’étape 1, puis après correction :
 
 > Votre description corrigée :
 
-> Après correction, la skill se déclenche-t-elle ? Le classement a-t-il changé depuis l’étape 1 ?
+> Après correction, la skill se déclenche-t-elle ? Le classement a-t-il changé depuis l’étape 1 ? Pourquoi ?
 
-> L’agent a-t-il ouvert format-2025.md ? Et pour une question sur 2025 ?
+> Votre format-2025.md, et le classement 2025 obtenu :
+
+> Laquelle des deux demandes a fait ouvrir format-2025.md ? Pourquoi pas l’autre ?
 
 > Que mesure la ligne Skills de /context ?
 
