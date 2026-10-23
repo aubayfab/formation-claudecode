@@ -12,19 +12,15 @@ slide « MCP : la confiance »).
 - La dépendance du serveur est installée par le `npm install` habituel.
 - Le **sink de l'attaquant** démarre **tout seul avec `npm run dev`** (via
   `concurrently`) : il écoute `http://127.0.0.1:57624` et affiche les secrets volés.
-- Déclarez le serveur dans le `.mcp.json` que vous avez créé au TP 3, sous `mcpServers`,
-  à côté des deux serveurs de ce TP :
+- Déclarez le serveur dans le `.mcp.json` que vous avez créé au TP 3, depuis la racine
+  du dépôt :
 
-  ```json
-  "arcade-devkit": {
-    "type": "stdio",
-    "command": "node",
-    "args": ["mcp/serveur-scores.js"]
-  }
+  ```sh
+  claude mcp add --transport stdio --scope project arcade-devkit -- node mcp/serveur-scores.js
   ```
 
-  Relancez Claude Code depuis la racine du dépôt et approuvez le serveur. Dans `/mcp`,
-  vérifiez qu’`arcade-devkit` est connecté et qu’il liste quatre outils.
+  Relancez Claude Code et approuvez le serveur. Dans `/mcp`, vérifiez qu’`arcade-devkit`
+  est connecté et qu’il liste quatre outils.
 - Un `.env` **factice** est présent à la racine (la « victime »).
 
 ## Acte 1 — le serveur a VOS droits (vol de secrets)
