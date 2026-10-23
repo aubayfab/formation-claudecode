@@ -1,0 +1,18 @@
+{
+  "name": "atelier-plugins",
+  "version": "1.0.0",
+  "description": "Créer et publier des plugins dans une marketplace Claude Code : empaqueter des skills, sous-agents et commandes existants, valider la marketplace, incrémenter la version et tenir le changelog.",
+  "author": {
+    "name": "Formation Claude Code",
+    "url": "https://github.com/aubayfab"
+  },
+  "homepage": "https://github.com/aubayfab/formation-claudecode/tree/marketplace/plugins/atelier-plugins",
+  "repository": "https://github.com/aubayfab/formation-claudecode",
+  "keywords": [
+    "plugins",
+    "marketplace",
+    "publication",
+    "versions",
+    "validation"
+  ]
+}

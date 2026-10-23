@@ -1,0 +1,19 @@
+{
+  "name": "garde-fous",
+  "version": "1.0.1",
+  "description": "Hook PreToolUse qui empêche Claude Code de lancer des commandes destructrices, de lire ou d’exfiltrer des secrets et de modifier sa propre configuration. Refus ou confirmation, avec une alternative proposée à chaque fois.",
+  "author": {
+    "name": "Formation Claude Code",
+    "url": "https://github.com/aubayfab"
+  },
+  "homepage": "https://github.com/aubayfab/formation-claudecode/tree/marketplace/plugins/garde-fous",
+  "repository": "https://github.com/aubayfab/formation-claudecode",
+  "keywords": [
+    "securite",
+    "hooks",
+    "pretooluse",
+    "secrets",
+    "exfiltration",
+    "garde-fous"
+  ]
+}

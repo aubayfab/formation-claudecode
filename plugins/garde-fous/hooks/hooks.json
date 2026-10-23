@@ -1,0 +1,18 @@
+{
+  "description": "Garde-fous : examine chaque appel d’outil avant son exécution et le refuse ou demande confirmation selon les règles de scripts/regles.mjs.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/scripts/garde-fous.mjs"],
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

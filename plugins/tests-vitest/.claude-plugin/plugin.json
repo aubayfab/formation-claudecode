@@ -1,0 +1,18 @@
+{
+  "name": "tests-vitest",
+  "version": "1.0.0",
+  "description": "Tests Vitest déterministes : une skill pour écrire des tests et reproduire des bugs (temps, hasard, stockage, Canvas), un rapport de tests économe en contexte, des conventions chargées quand Claude travaille sur un fichier de test et un sous-agent testeur qui ne touche pas au code de production.",
+  "author": {
+    "name": "Formation Claude Code",
+    "url": "https://github.com/aubayfab"
+  },
+  "homepage": "https://github.com/aubayfab/formation-claudecode/tree/marketplace/plugins/tests-vitest",
+  "repository": "https://github.com/aubayfab/formation-claudecode",
+  "keywords": [
+    "tests",
+    "vitest",
+    "typescript",
+    "tdd",
+    "non-regression"
+  ]
+}
