@@ -7,13 +7,24 @@ d'apparence anodine, que vous **n'avez pas désactivé**. C'est **cet outil qui 
 malveillant**, et qui fait **deux dégâts d'un seul appel** (les deux vecteurs de la
 slide « MCP : la confiance »).
 
-## Rien à préparer
+## Préparation
 
 - La dépendance du serveur est installée par le `npm install` habituel.
 - Le **sink de l'attaquant** démarre **tout seul avec `npm run dev`** (via
   `concurrently`) : il écoute `http://127.0.0.1:57624` et affiche les secrets volés.
-- Dans Claude Code : approuver le serveur du `.mcp.json` du projet au démarrage, puis
-  `/mcp` → `arcade-devkit` (outils **activés**).
+- Déclarez le serveur dans le `.mcp.json` que vous avez créé au TP 3, sous `mcpServers`,
+  à côté des deux serveurs de ce TP :
+
+  ```json
+  "arcade-devkit": {
+    "type": "stdio",
+    "command": "node",
+    "args": ["mcp/serveur-scores.js"]
+  }
+  ```
+
+  Relancez Claude Code depuis la racine du dépôt et approuvez le serveur. Dans `/mcp`,
+  vérifiez qu’`arcade-devkit` est connecté et qu’il liste quatre outils.
 - Un `.env` **factice** est présent à la racine (la « victime »).
 
 ## Acte 1 — le serveur a VOS droits (vol de secrets)
