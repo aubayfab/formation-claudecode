@@ -108,7 +108,7 @@ Problèmes rencontrés :
 | Sources exactes, sur 31                       |               |            |
 | Règles fausses (contredisent le référentiel)  |               |            |
 | Anomalies signalées, sur 4                    |               |            |
-| Coût relatif de la session (1er essai = 1)     |               |            |
+| Coût relatif de la session (1er essai = 1)    |               |            |
 | Contexte occupé en fin de tâche (/context)    |               |            |
 
 Problèmes rencontrés :
