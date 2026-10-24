@@ -9,7 +9,8 @@ import { ajouterAuTableau, aujourdhui, lireFrontmatter, lireJson, trouverMarketp
 
 const AIDE = `Usage : node creer.mjs <nom> --description "texte" [--depuis <chemin>]… [--racine <dossier>]
 
-Crée plugins/<nom>/ en version 0.1.0 et l'inscrit au catalogue de la marketplace :
+Crée plugins/<nom>/ et l'inscrit au catalogue de la marketplace, sans version dans
+l'entrée : la version 0.1.0 va dans le seul plugin.json. Le dossier reçoit
 .claude-plugin/plugin.json, README.md, CHANGELOG.md, et les composants copiés depuis
 chaque --depuis :
 
@@ -151,7 +152,8 @@ writeFileSync(
   `# Changelog\n\nToutes les évolutions notables de ce plugin. Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versions : [SemVer](https://semver.org/lang/fr/).\n\n## [0.1.0] - ${aujourdhui()}\n\n### Ajouté\n\n- Première version : ${contenu}.\n`,
 );
 
-const entree = { name: nom, source: `./plugins/${nom}`, description, version: '0.1.0' };
+// Pas de version dans l'entrée : elle vit dans le seul plugin.json.
+const entree = { name: nom, source: `./plugins/${nom}`, description };
 writeFileSync(marketplace.chemin, ajouterAuTableau(texteCatalogue, ['plugins'], entree));
 
 console.log(`Plugin ${nom} 0.1.0 créé dans ${relative(racine, dossier).replaceAll('\\', '/')} et inscrit dans ${marketplace.relatif}.`);

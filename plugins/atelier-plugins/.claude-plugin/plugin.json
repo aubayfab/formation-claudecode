@@ -1,6 +1,6 @@
 {
   "name": "atelier-plugins",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Créer et publier des plugins dans une marketplace Claude Code : empaqueter des skills, sous-agents et commandes existants, valider la marketplace, incrémenter la version et tenir le changelog.",
   "author": {
     "name": "Formation Claude Code",

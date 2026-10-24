@@ -1,20 +1,20 @@
 ---
 name: publier-plugin
-description: Publie la modification d'un plugin d'une marketplace Claude Code - validation de la marketplace, choix et application du bon incrément de version (catalogue, manifeste et changelog à la fois), puis commit et push qui rendent la mise à jour disponible aux utilisateurs. À utiliser après avoir modifié une skill, un hook, un sous-agent, une commande ou un serveur MCP d'un plugin, quand une mise à jour n'arrive pas chez les utilisateurs, ou pour vérifier une marketplace avant de la publier.
+description: Publie la modification d'un plugin d'une marketplace Claude Code - validation de la marketplace, choix et application du bon incrément de version (manifeste et changelog), puis commit et push qui rendent la mise à jour disponible aux utilisateurs. À utiliser après avoir modifié une skill, un hook, un sous-agent, une commande ou un serveur MCP d'un plugin, quand une mise à jour n'arrive pas chez les utilisateurs, ou pour vérifier une marketplace avant de la publier.
 argument-hint: '<plugin> [patch|minor|major]'
 compatibility: Dépôt Git d'une marketplace de plugins Claude Code ; Node.js 20 ou plus récent ; CLI claude.
 ---
 
 # Publier un plugin
 
-Une modification n'atteint les utilisateurs qu'une fois poussée sur la branche de la marketplace, et ne leur est annoncée que si la version du plugin augmente. Le catalogue et le manifeste du plugin portent chacun ce numéro : ils doivent rester identiques.
+Une modification n'atteint les utilisateurs qu'une fois poussée sur la branche de la marketplace, et ne leur est annoncée que si la version du plugin augmente. Ce numéro figure dans le seul manifeste du plugin, `.claude-plugin/plugin.json` : Claude Code le lit en premier, et la documentation déconseille de le déclarer aussi dans le catalogue. Le catalogue n'en déclare donc aucun.
 
 ## Outils
 
 Les commandes se lancent depuis la racine de la marketplace, le dossier qui contient `.claude-plugin/marketplace.json`. `${CLAUDE_SKILL_DIR}` est le dossier de ce fichier : Claude Code le remplace par son chemin réel.
 
 - [scripts/valider.mjs](scripts/valider.mjs) : vérifie le catalogue et chaque plugin (manifeste, skills, agents, commandes, hooks, serveurs MCP, syntaxe des scripts, versions). Avec `--base <référence>`, vérifie en plus que chaque plugin modifié depuis cette référence a changé de version.
-- [scripts/version.mjs](scripts/version.mjs) : porte la nouvelle version dans le manifeste et dans le catalogue, et ajoute l'entrée datée du CHANGELOG.md.
+- [scripts/version.mjs](scripts/version.mjs) : écrit la nouvelle version dans le manifeste et ajoute l'entrée datée du CHANGELOG.md. Il refuse un plugin dont l'entrée du catalogue déclare une version.
 - `claude plugin validate <dossier>` : le validateur de Claude Code, qui connaît le schéma exact des manifestes. Il complète `valider.mjs` sans le remplacer.
 
 `--aide` sur chaque script. Codes de sortie : 0 succès, 1 erreur à corriger, 2 usage ou environnement.
@@ -29,7 +29,7 @@ Les commandes se lancent depuis la racine de la marketplace, le dossier qui cont
    - `major` : rupture (comportement supprimé ou inversé, skill ou agent renommé, configuration à revoir).
 
    Annonce ton choix et sa raison. Si l'utilisateur a donné le niveau, applique le sien.
-4. **Version.** `node "${CLAUDE_SKILL_DIR}/scripts/version.mjs" <plugin> <niveau> --note "<ce qui change, du point de vue de l'utilisateur>"`, une `--note` par changement. Le script modifie `plugins/<plugin>/.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` et `plugins/<plugin>/CHANGELOG.md` (entrée datée du jour).
+4. **Version.** `node "${CLAUDE_SKILL_DIR}/scripts/version.mjs" <plugin> <niveau> --note "<ce qui change, du point de vue de l'utilisateur>"`, une `--note` par changement. Le script modifie `plugins/<plugin>/.claude-plugin/plugin.json` et `plugins/<plugin>/CHANGELOG.md` (entrée datée du jour). S'il refuse parce que l'entrée du catalogue déclare une version, retire-la de `.claude-plugin/marketplace.json`, puis relance.
 5. **Validation après.** `node "${CLAUDE_SKILL_DIR}/scripts/valider.mjs" --base <branche distante>`, par exemple `--base origin/marketplace` : aucun plugin modifié ne doit garder sa version. Relance aussi `claude plugin validate .`.
 6. **Commit et push.** Montre `git diff` et propose un message de la forme `<plugin> <version> : <résumé>`. Commit et push vers le dépôt de l'utilisateur (`git push origin <branche>`) **seulement avec l'accord explicite de l'utilisateur** : le push publie pour tous ceux qui ont ajouté la marketplace depuis ce dépôt.
 7. **Après le push**, rappelle comment la mise à jour arrive chez un utilisateur :
@@ -39,7 +39,7 @@ Les commandes se lancent depuis la racine de la marketplace, le dossier qui cont
 
 ## À ne jamais faire
 
-- Changer une version à la main dans un seul des deux fichiers.
+- Déclarer une version dans le catalogue : elle n'a sa place que dans `plugin.json`.
 - Réutiliser ou baisser un numéro déjà publié.
 - Pousser sans accord, ou avec `--force`.
 

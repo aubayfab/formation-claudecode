@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-// Incrémente la version d'un plugin, au même numéro dans son manifeste et dans le
-// catalogue de la marketplace, et ajoute l'entrée datée du jour à son CHANGELOG.md.
+// Incrémente la version d'un plugin dans son manifeste, seul fichier qui la déclare, et
+// ajoute l'entrée datée du jour à son CHANGELOG.md. Le catalogue de la marketplace ne
+// déclare pas de version : Claude Code lit d'abord celle de plugin.json, et la
+// documentation déconseille de la déclarer aux deux endroits.
 
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
@@ -12,6 +14,7 @@ import {
   incrementer,
   lireJson,
   modifierChampJson,
+  MANIFESTE,
   trouverManifeste,
   trouverMarketplace,
 } from './marketplace.mjs';
@@ -21,8 +24,10 @@ const AIDE = `Usage : node version.mjs <plugin> <patch|minor|major|x.y.z> --note
 
 Met à jour, d'un coup :
   - la version du manifeste du plugin (.claude-plugin/plugin.json) ;
-  - la version de son entrée dans le catalogue de la marketplace ;
   - son CHANGELOG.md, avec une entrée datée du jour.
+
+La version vit dans le seul manifeste : le script refuse un plugin dont l'entrée du
+catalogue déclare aussi une version. Retirez-la du catalogue d'abord.
 
 Niveaux : patch pour un correctif (1.2.3 → 1.2.4), minor pour un ajout compatible
 (1.2.3 → 1.3.0), major pour un changement incompatible (1.2.3 → 2.0.0), ou une
@@ -83,9 +88,15 @@ const racine = resolve(options.racine);
 const marketplace = trouverMarketplace(racine);
 if (!marketplace) echec(`Aucun catalogue de marketplace dans ${racine}.`);
 
-const { texte: texteCatalogue, donnees: catalogue } = lireJson(marketplace.chemin);
+const { donnees: catalogue } = lireJson(marketplace.chemin);
 const index = (catalogue.plugins ?? []).findIndex((entree) => entree?.name === nom);
 if (index < 0) echec(`Plugin « ${nom} » absent du catalogue ${marketplace.relatif}.`);
+if (catalogue.plugins[index].version !== undefined) {
+  echec(
+    `L'entrée « ${nom} » du catalogue ${marketplace.relatif} déclare une version : retirez-la. ` +
+      `La version vit dans ${MANIFESTE}, que Claude Code lit en premier.`,
+  );
+}
 const dossier = dossierDeSource(racine, catalogue.plugins[index].source);
 if (!dossier || !existsSync(dossier)) echec(`« ${nom} » n'est pas un plugin local de cette marketplace : sa version se gère dans son propre dépôt.`);
 const manifestePlugin = trouverManifeste(dossier);
@@ -93,19 +104,16 @@ if (!manifestePlugin) echec(`Aucun manifeste dans ${relative(racine, dossier)} (
 
 const cheminManifeste = manifestePlugin.chemin;
 const { texte: texteManifeste, donnees: manifeste } = lireJson(cheminManifeste);
-const actuelle = manifeste.version ?? catalogue.plugins[index].version;
+const actuelle = manifeste.version;
+if (actuelle === undefined) {
+  echec(`${MANIFESTE} de « ${nom} » ne déclare pas de version : ses utilisateurs suivent les commits. Ajoutez « "version": "x.y.z" » pour publier par numéro.`);
+}
 if (!estSemver(actuelle)) echec(`Version actuelle « ${actuelle} » non sémantique : corrigez-la à la main d'abord.`);
 const nouvelle = estSemver(niveau) ? niveau : incrementer(actuelle, niveau);
 if (comparerVersions(nouvelle, actuelle) <= 0) echec(`La nouvelle version (${nouvelle}) doit être plus élevée que l'actuelle (${actuelle}).`);
 
-// Manifeste et catalogue : seule la ligne de version change.
-const nouveauManifeste =
-  modifierChampJson(texteManifeste, ['version'], nouvelle) ?? `${JSON.stringify({ ...manifeste, version: nouvelle }, null, 2)}\n`;
-let nouveauCatalogue = modifierChampJson(texteCatalogue, ['plugins', index, 'version'], nouvelle);
-if (nouveauCatalogue === null) {
-  catalogue.plugins[index].version = nouvelle;
-  nouveauCatalogue = `${JSON.stringify(catalogue, null, 2)}\n`;
-}
+// Manifeste : seule la ligne de version change.
+const nouveauManifeste = modifierChampJson(texteManifeste, ['version'], nouvelle);
 
 // Changelog : la nouvelle entrée se place avant la plus récente.
 const cheminChangelog = join(dossier, 'CHANGELOG.md');
@@ -119,9 +127,8 @@ const premiere = changelog.search(/^## /m);
 changelog = premiere < 0 ? `${changelog.trimEnd()}\n\n${entree}` : `${changelog.slice(0, premiere)}${entree}${changelog.slice(premiere)}`;
 
 writeFileSync(cheminManifeste, nouveauManifeste);
-writeFileSync(marketplace.chemin, nouveauCatalogue);
 writeFileSync(cheminChangelog, `${changelog.trimEnd()}\n`);
 
 const afficher = (chemin) => relative(racine, chemin).replaceAll('\\', '/');
 console.log(`${nom} : ${actuelle} → ${nouvelle}`);
-for (const chemin of [cheminManifeste, marketplace.chemin, cheminChangelog]) console.log(`  modifié : ${afficher(chemin)}`);
+for (const chemin of [cheminManifeste, cheminChangelog]) console.log(`  modifié : ${afficher(chemin)}`);

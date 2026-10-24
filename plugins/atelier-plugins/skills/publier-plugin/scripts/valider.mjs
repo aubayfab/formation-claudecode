@@ -3,8 +3,8 @@
 // manifestes, skills, agents, commandes, hooks, serveurs MCP, scripts et versions.
 //
 // Complète `claude plugin validate`, sans le remplacer : ce script ajoute ce que la
-// commande officielle ne contrôle pas (accord des versions entre catalogue et manifeste,
-// plugin modifié sans nouvelle version, scripts livrés, liens des SKILL.md).
+// commande officielle ne contrôle pas (version déclarée dans le seul manifeste, plugin
+// modifié sans nouvelle version, scripts livrés, liens des SKILL.md).
 
 import { execFileSync, spawnSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
@@ -26,7 +26,8 @@ Vérifie la marketplace dont la racine est donnée (par défaut le répertoire c
   - le catalogue .claude-plugin/marketplace.json ;
   - chaque plugin local qu'il référence : .claude-plugin/plugin.json, skills, agents,
     commandes, hooks, serveurs MCP, scripts JavaScript, liens des SKILL.md ;
-  - l'accord entre la version du catalogue et celle de chaque plugin.
+  - la version de chaque plugin, déclarée dans son seul plugin.json : le catalogue
+    n'en déclare pas, Claude Code lisant d'abord celle du manifeste.
 
 Options :
   --base <réf>   vérifie aussi que chaque plugin modifié depuis cette référence Git
@@ -223,10 +224,13 @@ function validerEntree(rapport, chemin, entree, index, dejaVus) {
   if (typeof entree.description !== 'string' || !entree.description.trim()) {
     rapport.avertissement(chemin, `${nom} : sans « description », le plugin est difficile à choisir dans /plugin.`);
   }
-  if (entree.version === undefined) {
-    rapport.avertissement(chemin, `${nom} : sans « version », Claude Code suit le dernier commit et n’annonce aucune mise à jour.`);
-  } else if (!estSemver(entree.version)) {
+  if (entree.version !== undefined && !estSemver(entree.version)) {
     rapport.erreur(chemin, `${nom} : version « ${entree.version} » non sémantique (attendu : majeure.mineure.correctif).`);
+  } else if (entree.version !== undefined) {
+    rapport.avertissement(
+      chemin,
+      `${nom} : version déclarée dans le catalogue. Déclarez-la dans le seul plugin.json du plugin, que Claude Code lit en premier.`,
+    );
   }
   if (typeof entree.source === 'string') {
     if (entree.source !== '.' && !entree.source.startsWith('./')) {
@@ -268,13 +272,15 @@ function validerManifeste(rapport, manifestePlugin, entree) {
     rapport.erreur(chemin, '« homepage » n’est pas une URL : Claude Code refuse de charger le plugin.');
   }
   if (manifeste.version === undefined) {
-    rapport.avertissement(chemin, 'pas de « version » dans le manifeste du plugin.');
+    if (entree.version === undefined) {
+      rapport.avertissement(chemin, 'pas de « version » : les utilisateurs suivent les commits au lieu d’un numéro de version.');
+    }
   } else if (!estSemver(manifeste.version)) {
     rapport.erreur(chemin, `version « ${manifeste.version} » non sémantique.`);
   } else if (entree.version !== undefined && entree.version !== manifeste.version) {
     rapport.erreur(
       chemin,
-      `version ${manifeste.version} dans le manifeste, ${entree.version} dans le catalogue : alignez les deux, Claude Code retient celle du manifeste.`,
+      `version ${manifeste.version} dans le manifeste, ${entree.version} dans le catalogue : Claude Code retient celle du manifeste sans prévenir. Retirez-la du catalogue.`,
     );
   }
   return manifeste;

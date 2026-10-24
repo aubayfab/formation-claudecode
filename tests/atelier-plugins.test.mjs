@@ -28,7 +28,7 @@ function marketplace(fichiers = {}, entree = {}) {
       name: 'essai',
       owner: { name: 'Équipe' },
       description: 'Marketplace d’essai.',
-      plugins: [{ name: 'demo', source: './plugins/demo', description: 'Plugin de démonstration.', version: '1.0.0', ...entree }],
+      plugins: [{ name: 'demo', source: './plugins/demo', description: 'Plugin de démonstration.', ...entree }],
     },
     'plugins/demo/.claude-plugin/plugin.json': { name: 'demo', version: '1.0.0', description: 'Démo.' },
     'plugins/demo/README.md': '# demo\n',
@@ -66,6 +66,16 @@ test('une marketplace minimale valide ne signale rien', () => {
 
 test('versions différentes entre catalogue et manifeste', () => {
   attendreProbleme(marketplace({}, { version: '1.1.0' }), 'erreur', /version 1\.0\.0 dans le manifeste, 1\.1\.0 dans le catalogue/);
+});
+
+test('version déclarée aussi dans le catalogue, même identique', () => {
+  const racine = marketplace({}, { version: '1.0.0' });
+  attendreProbleme(racine, 'avertissement', /version déclarée dans le catalogue/);
+  assert.equal(valider(racine).code, 0);
+});
+
+test('aucune version : les utilisateurs suivent les commits', () => {
+  attendreProbleme(marketplace({ 'plugins/demo/.claude-plugin/plugin.json': { name: 'demo', description: 'Démo.' } }), 'avertissement', /suivent les commits/);
 });
 
 test('nom du manifeste différent de celui du catalogue', () => {
@@ -223,15 +233,16 @@ test('--base : référence inconnue, code 2', () => {
   assert.equal(valider(racine, '--base', 'origin/nexiste-pas').code, 2);
 });
 
-test('version.mjs ne change que les lignes de version et ouvre le changelog', () => {
+test('version.mjs ne change que la ligne de version du manifeste et ouvre le changelog', () => {
   const racine = marketplace();
-  const avantCatalogue = readFileSync(join(racine, '.claude-plugin/marketplace.json'), 'utf8');
+  const lire = (chemin) => readFileSync(join(racine, chemin), 'utf8');
+  const avantCatalogue = lire('.claude-plugin/marketplace.json');
+  const avantManifeste = lire('plugins/demo/.claude-plugin/plugin.json');
   const resultat = spawnSync(process.execPath, [VERSION, 'demo', 'patch', '--note', 'Faute corrigée.', '--racine', racine], { encoding: 'utf8' });
   assert.equal(resultat.status, 0, resultat.stderr);
-  const apresCatalogue = readFileSync(join(racine, '.claude-plugin/marketplace.json'), 'utf8');
-  const differences = apresCatalogue.split('\n').filter((ligne, i) => ligne !== avantCatalogue.split('\n')[i]);
-  assert.deepEqual(differences, ['      "version": "1.0.1"']);
-  assert.equal(JSON.parse(readFileSync(join(racine, 'plugins/demo/.claude-plugin/plugin.json'), 'utf8')).version, '1.0.1');
+  assert.equal(lire('.claude-plugin/marketplace.json'), avantCatalogue, 'le catalogue ne doit pas changer');
+  const differences = lire('plugins/demo/.claude-plugin/plugin.json').split('\n').filter((ligne, i) => ligne !== avantManifeste.split('\n')[i]);
+  assert.deepEqual(differences, ['  "version": "1.0.1",']);
   const changelog = readFileSync(join(racine, 'plugins/demo/CHANGELOG.md'), 'utf8');
   assert.match(changelog, /## \[1\.0\.1\] - \d{4}-\d{2}-\d{2}\n\n### Corrigé\n\n- Faute corrigée\.\n\n## \[1\.0\.0\]/);
 });
@@ -250,6 +261,16 @@ test('version.mjs refuse une version plus basse, une note absente, un plugin inc
   assert.equal(lancer('demo', '0.9.0', '--note', 'x'), 1);
   assert.equal(lancer('demo', 'minor'), 2);
   assert.equal(lancer('inconnu', 'minor', '--note', 'x'), 1);
+});
+
+test('version.mjs refuse un plugin dont le catalogue déclare aussi une version, ou sans version', () => {
+  const lancer = (racine) => spawnSync(process.execPath, [VERSION, 'demo', 'minor', '--note', 'x', '--racine', racine], { encoding: 'utf8' });
+  const enDouble = lancer(marketplace({}, { version: '1.0.0' }));
+  assert.equal(enDouble.status, 1);
+  assert.match(enDouble.stderr, /déclare une version : retirez-la/);
+  const sansVersion = lancer(marketplace({ 'plugins/demo/.claude-plugin/plugin.json': { name: 'demo', description: 'Démo.' } }));
+  assert.equal(sansVersion.status, 1);
+  assert.match(sansVersion.stderr, /ne déclare pas de version/);
 });
 
 test('creer.mjs empaquette un dossier .claude et produit un plugin valide', () => {
@@ -273,6 +294,7 @@ test('creer.mjs empaquette un dossier .claude et produit un plugin valide', () =
   assert.ok(apres.startsWith(avant.slice(0, avant.lastIndexOf('}', avant.lastIndexOf(']')) + 1)), 'les entrées existantes ne doivent pas être reformatées');
   const catalogue = JSON.parse(apres);
   assert.deepEqual(catalogue.plugins.map((p) => p.name), ['demo', 'equipe-front']);
+  assert.equal(catalogue.plugins[1].version, undefined, 'la version vit dans plugin.json, pas dans le catalogue');
   for (const fichier of ['skills/contraste/SKILL.md', 'skills/contraste/scripts/c.mjs', 'agents/relecteur.md', 'commands/check.md', '.claude-plugin/plugin.json']) {
     assert.ok(readFileSync(join(racine, 'plugins/equipe-front', fichier)), fichier);
   }
