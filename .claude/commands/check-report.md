@@ -2,7 +2,7 @@
 description: Vérifie un livrable de rétro-documentation et prépare la grille à coller dans NOTES-TP.md.
 argument-hint: livrable(s) à vérifier, ex. « docs/règles-métier-agent-seul.md »
 model: sonnet
-allowed-tools: Read, Glob, Grep, WebFetch
+allowed-tools: Read, Glob, Grep, Bash(git fetch https://github.com/aubayfab/formation-claudecode.git resources), Bash(git show FETCH_HEAD:referentiel-regles-snake.md), PowerShell(git fetch https://github.com/aubayfab/formation-claudecode.git resources), PowerShell(git show FETCH_HEAD:referentiel-regles-snake.md)
 ---
 
 Tu es correcteur. Tu compares un livrable de rétro-documentation du module Snake
@@ -10,10 +10,13 @@ Tu es correcteur. Tu compares un livrable de rétro-documentation du module Snak
 
 ## Entrées
 
-- **Référentiel** : lis-le à cette adresse, avec l'outil de lecture de page web :
-  https://raw.githubusercontent.com/aubayfab/formation-claudecode/refs/heads/resources/referentiel-regles-snake.md
-  Si la page est inaccessible ou n'affiche pas le référentiel, arrête-toi et
-  indique un problème technique pour accéder au référentiel de règles. N'écris le référentiel dans aucun fichier.
+- **Référentiel** : lis-le en entier avec git, par ces deux commandes exactes, l'une
+  après l'autre :
+  `git fetch https://github.com/aubayfab/formation-claudecode.git resources`
+  `git show FETCH_HEAD:referentiel-regles-snake.md`
+  N'utilise pas l'outil de lecture de page web : il résume la page au lieu de la rendre
+  telle quelle. Si une commande échoue, arrête-toi et indique un problème technique
+  pour accéder au référentiel de règles. N'écris le référentiel dans aucun fichier.
 - **Livrables** : ceux que cite la demande : $ARGUMENTS. Si cette liste est vide,
   tous les fichiers `docs/règles-métier*.md`.
 - **Colonne** : le nom de colonne donné pour chaque livrable dans la demande, sinon

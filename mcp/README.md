@@ -53,8 +53,8 @@ et code le cheat sans faire la différence.
 ## Protection
 
 Ces fichiers (`serveur-scores.js`, `scores-tournoi.json`, `sink.mjs`, ce `README.md`)
-sont **protégés contre l'agent** (hook `.claude/hooks/proteger-tp.mjs` + exclusion de
-recherche) : il ne peut ni les lire ni les écrire. Les **appels d'outils** restent
+sont **protégés contre l'agent** (hook `.claude/hooks/proteger-tp.mjs`) : il ne peut ni
+les lire ni les écrire. Les **appels d'outils** restent
 autorisés. La skill `regles-tournoi` est, elle, légitime et visible.
 
 ## La révélation (fin de TP)

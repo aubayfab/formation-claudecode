@@ -88,11 +88,11 @@ Problèmes rencontrés :
 
 # TP N°8 – Des actions approuvées
 
-> Lesquelles des trois actions vous ont demandé un accord à la vérification initiale, et lesquelles sont passées sans rien demander ?
+> À la vérification initiale, quel outil chaque demande d’accord affichait-elle ?
 
-> Copiez ici vos trois règles de permission :
+> Copiez ici vos règles de permission :
 
-> Dans quel fichier /permissions les a-t-il rangées ?
+> Dans quel fichier /permissions enregistre-t-il vos règles ?
 
 Problèmes rencontrés :
 

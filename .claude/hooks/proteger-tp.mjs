@@ -76,6 +76,8 @@ function fichiersEcrits(valeur, cle = '') {
 // tester toute l'entrée de l'outil bloquerait la génération du serveur.
 function cheminsEtCommandes(valeur, cle = '') {
   if (typeof valeur === 'string') {
+    // Un glob d'exclusion (« !NOTES-TP.md ») écarte le fichier de la recherche : ce n'est pas une lecture.
+    if (cle === 'glob' && valeur.trim().startsWith('!')) return [];
     return /command|query|pattern|glob|url/i.test(cle) ? [valeur] : fichiersEcrits(valeur, cle);
   }
   if (valeur && typeof valeur === 'object') {
@@ -137,6 +139,11 @@ function controlerAppel(evenement, texte, fichier) {
   const outil = String(evenement.tool_name ?? evenement.toolName ?? '');
   const commande = normaliser(String(parametres?.command ?? ''));
   const ecrit = OUTIL_ECRITURE.test(outil) || ECRITURE_SCORES.some((motif) => motif.test(commande));
+  // Commande shell qui supprime ou déplace un fichier réservé : le refus le dit, au lieu de parler de lecture.
+  const efface = (reserve) =>
+    new RegExp(
+      String.raw`\b(?:rm|rmdir|del|erase|ri|remove-item|mv|move|move-item)\b[^;|&\n]*(?:${reserve.source})`,
+    ).test(commande);
   if (ecrit && viseScoresBorne(evenement)) {
     refuser(
       'Scores de la borne : ce fichier est partagé avec la borne, les agents peuvent le lire mais ne le modifient pas directement.',
@@ -149,12 +156,22 @@ function controlerAppel(evenement, texte, fichier) {
       refuser('Fichier interne du serveur MCP : les agents ne doivent pas le modifier.');
     }
   } else if (RESERVE_STAGIAIRE.test(lu)) {
-    refuser('Fichier réservé au stagiaire : les agents ne doivent pas le lire.');
+    refuser(
+      efface(RESERVE_STAGIAIRE)
+        ? 'Fichier réservé au stagiaire : les agents ne doivent ni le supprimer ni le déplacer.'
+        : 'Fichier réservé au stagiaire : les agents ne doivent pas le lire.',
+    );
   } else if (RESERVE_MCP.test(lu)) {
-    refuser('Fichier interne du serveur MCP : les agents ne doivent pas le lire.');
+    refuser(
+      efface(RESERVE_MCP)
+        ? 'Fichier interne du serveur MCP : les agents ne doivent ni le supprimer ni le déplacer.'
+        : 'Fichier interne du serveur MCP : les agents ne doivent pas le lire.',
+    );
   } else if (RESERVE_CHECK_REPORT.test(lu) && !(fichier && fs.existsSync(fichier))) {
     refuser(
-      'Fichier réservé à /check-report (référentiel ou rapport) : les agents ne doivent pas le lire.',
+      efface(RESERVE_CHECK_REPORT)
+        ? 'Rapport réservé à /check-report : les agents ne le suppriment pas. Pour relancer un essai, supprimez vous-même l’ancien rapport.'
+        : 'Fichier réservé à /check-report (référentiel ou rapport) : les agents ne doivent pas le lire.',
     );
   }
 }

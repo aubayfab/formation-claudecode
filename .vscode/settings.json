@@ -1,5 +1,6 @@
 {
-  // Les recherches (celles des agents comme la vôtre) ignorent ces fichiers.
+  // La recherche de VS Code ignore ces fichiers. Claude Code ne lit pas ce réglage :
+  // ses recherches ne respectent que .gitignore.
   // Ils restent visibles et modifiables dans l'explorateur.
   "search.exclude": {
     "**/NOTES-TP.md": true,
