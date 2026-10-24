@@ -13,7 +13,7 @@ Un plugin regroupe des composants qui servent un même usage et s'installent ens
 
 `${CLAUDE_SKILL_DIR}` est le dossier de ce fichier : Claude Code le remplace par son chemin réel. Les commandes se lancent depuis la racine de la marketplace.
 
-- [scripts/creer.mjs](scripts/creer.mjs) : crée `plugins/<nom>/` (`.claude-plugin/plugin.json`, README, CHANGELOG), y copie les composants désignés par `--depuis` et inscrit le plugin au catalogue en version 0.1.0. `--aide` pour le détail.
+- [scripts/creer.mjs](scripts/creer.mjs) : crée `plugins/<nom>/` (`.claude-plugin/plugin.json`, README, CHANGELOG), y copie les composants désignés par `--depuis` et inscrit le plugin au catalogue. La version 0.1.0 va dans le seul `plugin.json` : l'entrée du catalogue n'en déclare pas. `--aide` pour le détail.
 - La skill `publier-plugin`, dans le même plugin, pour valider puis publier : son validateur est [../publier-plugin/scripts/valider.mjs](../publier-plugin/scripts/valider.mjs).
 
 ## Procédure
