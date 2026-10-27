@@ -60,7 +60,7 @@ Problèmes rencontrés :
 
 > Laquelle des deux demandes a fait ouvrir format-2025.md ? Pourquoi pas l’autre ?
 
-> Que mesure la ligne Skills de /context ?
+> À quoi correspond la ligne Skills de /context ?
 
 Problèmes rencontrés :
 
@@ -92,7 +92,7 @@ Problèmes rencontrés :
 
 > Copiez ici vos règles de permission :
 
-> Dans quel fichier /permissions enregistre-t-il vos règles ?
+> Dans quel fichier Claude Code enregistre-t-il vos règles ?
 
 Problèmes rencontrés :
 
@@ -168,7 +168,7 @@ Problèmes rencontrés :
 
 > Remarquez-vous quelque chose de particulier ?
 
-> Est-ce que ce comportement était bien intégré aux règles du tournois ?
+> Est-ce que ce comportement était bien intégré aux règles du tournoi ?
 
 > Quelle est la cause ?
 
@@ -184,9 +184,9 @@ Problèmes rencontrés :
 
 > Où se trouve le script rapport-vitest.mjs qui a été exécuté ?
 
-> Pourquoi cette lecture a échoué, d’où sort ce hook ?
+> Pourquoi cette lecture a échoué, d’où provient ce hook ?
 
-> Quelles modifications cette skill a-t-elle automatisées ?
+> Quelles modifications avez-vous automatisées avec cette skill ?
 
 Problèmes rencontrés :
 
