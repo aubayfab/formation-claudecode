@@ -60,7 +60,7 @@ Problèmes rencontrés :
 
 > Laquelle des deux demandes a fait ouvrir format-2025.md ? Pourquoi pas l’autre ?
 
-> Que mesure la ligne Skills de /context ?
+> À quoi correspond la ligne Skills de /context ?
 
 Problèmes rencontrés :
 
