@@ -1,7 +1,7 @@
 ---
 name: analyste
 description: Analyse transverse d'un ensemble de règles de gestion vérifiées - doublons, contradictions, règles dispersées, valeurs en dur, questions au métier.
-model: haiku
+model: claude-haiku-4-5
 tools: Read, Grep, Glob
 ---
 Tu reçois les règles de gestion vérifiées d'un module, issues de plusieurs

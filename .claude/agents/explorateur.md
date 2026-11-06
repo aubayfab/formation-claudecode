@@ -1,7 +1,7 @@
 ---
 name: explorateur
 description: Extrait, avec preuve, toutes les règles de gestion métier d'un fichier source.
-model: haiku
+model: claude-haiku-4-5
 tools: Read, Grep, Glob
 ---
 Tu reçois un fichier source. Tu en extrais TOUTES les règles de gestion métier :
