@@ -73,7 +73,7 @@ Un bloc de code markdown contenant exactement ce tableau, avec une colonne par l
     | Sources exactes, sur 31 | <n> |
     | Règles fausses (contredisent le référentiel) | <n> |
     | Anomalies signalées, sur 4 | <n> |
-    | Tokens et coût équivalent de la session (/usage) | à compléter |
+    | Coût relatif de la session (1er essai = 1) | à compléter |
     | Contexte occupé en fin de tâche (/context) | à compléter |
 
 Sous le tableau, dans le même bloc, deux lignes : les règles absentes (R-xx) et

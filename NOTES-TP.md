@@ -20,7 +20,7 @@ Problèmes rencontrés :
 
 > Dans le plan, sur quoi repose le diagnostic ?
 
-> Le test échoue-t-il pour la bonne raison ? Comparez ses données avec les scores collés plus haut.
+> Le test échoue-t-il pour la bonne raison ? Comparez ses données avec celles que vous avez collées plus haut.
 
 Problèmes rencontrés :
 
@@ -30,13 +30,13 @@ Problèmes rencontrés :
 
 > Vos trois relevés de /context (avant connexion, après connexion, après les coups joués) :
 
-> Combien d’outils ajoutent ces serveurs ? Où /context les compte-t-il ? De combien le total bouge-t-il ?
+> Combien d’outils ajoutent ces serveurs ? Où Claude Code les compte-t-il dans /context ? De combien le total bouge-t-il ?
 
 > Quels outils a-t-il appelés ? Que lui renvoie browser_snapshot ?
 
 > Des serveurs ou de leurs réponses, qu’est-ce qui a le plus rempli le contexte ?
 
-> D’où vient la réponse : du serveur de documentation, du web ou de la mémoire du modèle ? Comment le savez-vous ?
+> D’où Claude tire-t-il sa réponse : du serveur de documentation, du web ou de la mémoire du modèle ? Comment le savez-vous ?
 
 > Fallait-il un MCP pour ces deux tâches ?
 
@@ -44,7 +44,7 @@ Problèmes rencontrés :
 
 # TP N°4 – Des agents compétents
 
-> La skill a-t-elle été chargée ? Le classement vous paraît-il crédible ?
+> Claude Code a-t-il chargé la skill ? Le classement vous paraît-il crédible ?
 
 > Quelles entrées viennent du dépôt ? Sous quel nom la skill apparaît-elle, avec quelle description ?
 
@@ -54,7 +54,7 @@ Problèmes rencontrés :
 
 > Votre description corrigée :
 
-> Après correction, la skill se déclenche-t-elle ? Le classement a-t-il changé depuis l’étape 1 ? Pourquoi ?
+> Après correction, Claude déclenche-t-il la skill ? Le classement a-t-il changé depuis l’étape 1 ? Pourquoi ?
 
 > Votre format-2025.md, et le classement 2025 obtenu :
 
@@ -111,11 +111,15 @@ Problèmes rencontrés :
 | Coût relatif de la session (1er essai = 1)    |               |            |
 | Contexte occupé en fin de tâche (/context)    |               |            |
 
+> Copiez ici votre agent retrodoc-writer :
+
+> Copiez ici le contenu de docs/règles-métier-agent-seul.md :
+
 Problèmes rencontrés :
 
 # TP N°10 – Une équipe de professionnels
 
-> Collez ici le bloc rendu par /check-report pour le livrable de l'équipe :
+> Collez ici le bloc rendu par /check-report pour le livrable de l’équipe :
 
 |                                               | Équipe |
 | --------------------------------------------- | ------ |
@@ -129,8 +133,6 @@ Problèmes rencontrés :
 | Contexte occupé en fin de tâche (/context)    |        |
 
 > Copiez ici votre orchestrateur :
-
-> Copiez ici votre explorateur :
 
 > Copiez ici votre scanner de cas limites :
 
@@ -158,9 +160,9 @@ Problèmes rencontrés :
 
 > Comment s’est comporté le modèle dans ses estimations ? Les couleurs ont-elles été respectées ou dénaturées ?
 
-> Comment s'est comporté l'agent avec sa skill ?
+> Comment s’est comporté l’agent avec sa skill ?
 
-> Copiez ici votre SKILL.md:
+> Copiez ici votre SKILL.md :
 
 Problèmes rencontrés :
 
@@ -174,7 +176,7 @@ Problèmes rencontrés :
 
 > Quel est le risque d’une injection d’instructions et comment s’en prémunir ?
 
-> D'où sortent ces mots de passe ? Comment sont-ils arrivés sur le serveur d’un attaquant ?
+> D’où sortent ces mots de passe ? Comment sont-ils arrivés sur le serveur d’un attaquant ?
 
 > Quel est le risque posé par l’exécution de MCP en local et comment s’en prémunir ?
 
@@ -198,16 +200,20 @@ Problèmes rencontrés :
 
 > Le client reçoit-il une erreur de protocole ou un résultat ? Qu’en fera le modèle ?
 
+> Quel outil Claude a-t-il appelé pour répondre ?
+
 Problèmes rencontrés :
 
 # TP N°16 – Évaluer et améliorer une skill
 
 > Quels critères peuvent être scriptés ?
 
-> Un seul model-grader pour les autres critères : qu'y gagne-t-on, qu'y perd-on ?
+> Un seul model-grader pour les autres critères : qu’y gagne-t-on, qu’y perd-on ?
 
 > Copiez ici votre grille d’évaluation (notes de la version 1.0.0 et de votre version) :
 
 > Avez-vous réussi à améliorer votre skill ? Quels critères avez-vous améliorés ?
+
+> Avec une seule passe par version, que pouvez-vous en conclure ?
 
 Problèmes rencontrés :
