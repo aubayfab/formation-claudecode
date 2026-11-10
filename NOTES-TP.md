@@ -36,7 +36,7 @@ Problèmes rencontrés :
 
 > Des serveurs ou de leurs réponses, qu’est-ce qui a le plus rempli le contexte ?
 
-> D’où Claude tire-t-il sa réponse : du serveur de documentation, du web ou de la mémoire du modèle ? Comment le savez-vous ?
+> D’où Claude tire-t-il sa réponse ? Comment le savez-vous ?
 
 > Fallait-il un MCP pour ces deux tâches ?
 
