@@ -14,7 +14,7 @@ Problèmes rencontrés :
 
 # TP N°2 – Mon premier bug
 
-> Collez ici les scores copiés depuis la borne :
+> Collez ici les scores copiés depuis la borne. Quelle ligne ne correspond à aucun score ?
 
 > Comment Claude a-t-il trouvé le fichier fautif ?
 
@@ -26,11 +26,11 @@ Problèmes rencontrés :
 
 # TP N°3 – Des agents outillés
 
-> Pourquoi Claude Code demande-t-il cette approbation ?
+> Quel risque prenez-vous en ouvrant ainsi un dépôt cloné ?
 
 > Vos trois relevés de /context (avant connexion, après connexion, après les coups joués) :
 
-> Combien d’outils ajoutent ces serveurs ? Où Claude Code les compte-t-il dans /context ? De combien le total bouge-t-il ?
+> Combien d’outils ajoutent ces serveurs ? De combien le total de /context bouge-t-il ? Pourquoi si peu ?
 
 > Quels outils a-t-il appelés ? Que lui renvoie browser_snapshot ?
 
