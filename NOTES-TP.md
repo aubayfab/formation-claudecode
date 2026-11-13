@@ -192,6 +192,22 @@ Problèmes rencontrés :
 
 Problèmes rencontrés :
 
+# TP bonus – Une fonctionnalité pilotée par sa spec
+
+> Chaque choix tranché pendant l’interview figure-t-il dans SPEC.md ? Que deviendrait un choix absent après le /clear de l’étape 3 ?
+
+> Un score enregistré le lundi à 0 h 30, heure de Paris, entre-t-il dans la semaine qui commence ? Que trouvez-vous à ce sujet dans SPEC.md ? Quelle date la borne enregistre-t-elle ?
+
+> Pour chaque exigence de SPEC.md, quel test du plan la vérifie ?
+
+> Pour chaque écart signalé, faut-il corriger le code ou la spec ?
+
+> Sur le seul diff de SPEC.md, le PO peut-il valider le changement ? Si vous aviez demandé directement le changement de code, que lirait Claude dans SPEC.md à la session suivante ?
+
+> Claude consigne-t-il quelque part, avec feature-dev, les points clarifiés avec vous ? Que resterait-il de ces choix pour le changement de l’étape 5 ?
+
+Problèmes rencontrés :
+
 # TP N°15 – Faites votre propre MCP
 
 > Quel module serveur_scores.py importe-t-il ?
