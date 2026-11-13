@@ -33,9 +33,36 @@ const OUTIL_ECRITURE = /create|replace|insert|edit|patch|write/i;
 const ECRITURE_SCORES = [
   /(>>?|\btee\b)\s*["']?[^\s;|&"']*scores\.json/,
   /\b(sed\s+-i|set-content|add-content|out-file|clear-content|remove-item|rm|del|erase|mv|move|move-item|truncate)\b[^;|&\n]*scores\.json/,
+  // sed -i dont le script contient un « ; » (« s/Kev;in/Kevin/ ») : le motif précédent s'arrête au « ; ».
+  /\bsed\s+(?:-[a-z]*i|--in-place)\b[\s\S]*scores\.json/,
   /\b(cp|copy|copy-item)\b[^;|&\n]*\s["']?[^\s;|&"']*scores\.json["']?\s*(?:$|[;|&\n])/,
   /(writefile|appendfile|write_text|json\.dump|open\([^)]*scores\.json[^)]*['"][wa])/,
+  // .NET depuis PowerShell, et New-Item -Force qui vide le fichier.
+  /\b(writealltext|writeallbytes|writealllines|appendalltext|appendalllines)\b[\s\S]*scores\.json/,
+  /\b(new-item|ni)\b[^;|&\n]*scores\.json/,
+  /\bprettier\b[^;|&\n]*--write\b[^;|&\n]*scores\.json/,
+  // Retour en arrière git sur le fichier : il efface les parties jouées.
+  /\bgit\s+(checkout|restore|reset|stash|clean)\b[^;|&\n]*scores\.json/,
 ];
+// Retour en arrière git sur tout le dépôt : il efface aussi les parties jouées de scores.json.
+const RETOUR_GIT_GLOBAL =
+  /\bgit\s+(?:reset\s+--hard|stash(?!\s+(?:list|show))|clean\s+-[a-z]*f|checkout\s+(?:--\s+)?\.(?:\s|$)|restore\s+(?:--[a-z-]+\s+)*\.(?:\s|$))/;
+// Ajout d'un score par l'API de la borne : le serveur de dev l'écrit dans scores.json.
+const API_SCORES = /api\/scores/;
+const ENVOI_HTTP =
+  /(-x\s*post|--request\s+post|\s-d\s|--data|-method\s+post|method\s*:\s*\\?['"`]post)/;
+// Copie de scores.json vers un dossier temporaire (test sur une copie, TP 15) : la destination
+// est le dernier argument de la commande de copie.
+function copieVersTemp(commande) {
+  const copie = commande.match(/\b(?:cp|copy|copy-item)\b([^;|&\n]*)/);
+  if (!copie) return false;
+  const args = copie[1]
+    .trim()
+    .split(/\s+/)
+    .filter((a) => !a.startsWith('-'));
+  return args.length >= 2 && DOSSIER_TEMP.test(args[args.length - 1]);
+}
+const OUTIL_SHELL_OU_PAGE = /^(bash|powershell)$|^mcp__/i;
 
 // Chemins encodés en URI, accents : « r%C3%A8gles-m%C3%A9tier » devient « regles-metier ».
 function normaliser(texte) {
@@ -144,9 +171,22 @@ function controlerAppel(evenement, texte, fichier) {
     new RegExp(
       String.raw`\b(?:rm|rmdir|del|erase|ri|remove-item|mv|move|move-item)\b[^;|&\n]*(?:${reserve.source})`,
     ).test(commande);
-  if (ecrit && viseScoresBorne(evenement)) {
+  const entreeComplete = normaliser(JSON.stringify(parametres ?? ''));
+  if (ecrit && viseScoresBorne(evenement) && !copieVersTemp(commande)) {
     refuser(
       'Scores de la borne : ce fichier est partagé avec la borne, les agents peuvent le lire mais ne le modifient pas directement.',
+    );
+  } else if (RETOUR_GIT_GLOBAL.test(commande)) {
+    refuser(
+      'Ce retour en arrière git toucherait aussi mcp-scores/scores.json, les scores de la borne : nommez les fichiers à restaurer.',
+    );
+  } else if (
+    OUTIL_SHELL_OU_PAGE.test(outil) &&
+    API_SCORES.test(entreeComplete) &&
+    ENVOI_HTTP.test(entreeComplete)
+  ) {
+    refuser(
+      'Scores de la borne : ajouter un score par /api/scores modifie mcp-scores/scores.json. Jouez une partie dans la borne, ou testez sur une copie du fichier.',
     );
   } else if (OUTIL_ECRITURE.test(outil)) {
     const cibles = fichiersEcrits(lireParametres(evenement));
