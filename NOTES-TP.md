@@ -44,23 +44,21 @@ Problèmes rencontrés :
 
 # TP N°4 – Des agents compétents
 
-> Claude Code a-t-il chargé la skill ? Le classement vous paraît-il crédible ?
+> Claude Code a-t-il chargé la skill ? Quel classement Claude rend-il, nombre de parties compris ? A-t-il écarté des lignes ?
 
 > Quelles entrées viennent du dépôt ? Sous quel nom la skill apparaît-elle, avec quelle description ?
 
 > Lancée sous ce nom, que fait l’agent ? Pourquoi l’appel manuel fonctionne-t-il ?
 
-> Le classement rendu à l’étape 1, puis après correction :
-
 > Votre description corrigée :
 
-> Après correction, Claude déclenche-t-il la skill ? Le classement a-t-il changé depuis l’étape 1 ? Pourquoi ?
+> Claude déclenche-t-il la skill ? Quel classement rend-il ? Écarte-t-il d’autres lignes qu’à l’étape 1 ?
 
-> Votre format-2025.md, et le classement 2025 obtenu :
+> Votre format-2025.md :
 
-> Laquelle des deux demandes a fait ouvrir format-2025.md ? Pourquoi pas l’autre ?
+> Quel classement Claude rend-il sans format-2025.md, puis avec ?
 
-> À quoi correspond la ligne Skills de /context ?
+> Qu’est-ce que Claude ne pouvait pas déduire des données seules ?
 
 Problèmes rencontrés :
 
