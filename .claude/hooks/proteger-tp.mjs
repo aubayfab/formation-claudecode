@@ -211,7 +211,7 @@ function controlerAppel(evenement, texte, fichier) {
     refuser(
       efface(RESERVE_CHECK_REPORT)
         ? 'Rapport réservé à /check-report : les agents ne le suppriment pas. Pour relancer un essai, supprimez vous-même l’ancien rapport.'
-        : 'Fichier réservé à /check-report (référentiel ou rapport) : les agents ne doivent pas le lire.',
+        : 'Fichier réservé à /check-report (référentiel ou rapport) : les agents ne doivent pas le lire. Pour écrire votre rapport, utilisez l’outil Write.',
     );
   }
 }
