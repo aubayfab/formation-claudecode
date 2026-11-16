@@ -158,7 +158,7 @@ Problèmes rencontrés :
 
 > Comment s’est comporté le modèle dans ses estimations ? Les couleurs ont-elles été respectées ou dénaturées ?
 
-> Comment s’est comporté l’agent avec sa skill ?
+> Claude a-t-il invoqué votre skill de lui-même ? Qu’avez-vous gagné avec la skill par rapport à la partie 1 ? Quelles actions avez-vous dû autoriser ?
 
 > Copiez ici votre SKILL.md :
 
