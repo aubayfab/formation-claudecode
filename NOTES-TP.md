@@ -107,7 +107,7 @@ Problèmes rencontrés :
 | Règles fausses (contredisent le référentiel)  |               |            |
 | Anomalies signalées, sur 4                    |               |            |
 | Coût relatif de la session (1er essai = 1)    |               |            |
-| Contexte occupé en fin de tâche (/context)    |               |            |
+| Contexte à la fin (/cout-sessions)            |               |            |
 
 > Copiez ici votre agent retrodoc-writer :
 
@@ -128,7 +128,7 @@ Problèmes rencontrés :
 | Règles fausses (contredisent le référentiel)  |        |
 | Anomalies signalées, sur 4                    |        |
 | Coût relatif de la session (1er essai = 1)    |        |
-| Contexte occupé en fin de tâche (/context)    |        |
+| Contexte à la fin (/cout-sessions)            |        |
 
 > Copiez ici votre orchestrateur :
 

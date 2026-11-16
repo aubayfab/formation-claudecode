@@ -74,7 +74,7 @@ Un bloc de code markdown contenant exactement ce tableau, avec une colonne par l
     | Règles fausses (contredisent le référentiel) | <n> |
     | Anomalies signalées, sur 4 | <n> |
     | Coût relatif de la session (1er essai = 1) | à compléter |
-    | Contexte occupé en fin de tâche (/context) | à compléter |
+    | Contexte à la fin (/cout-sessions) | à compléter |
 
 Sous le tableau, dans le même bloc, deux lignes : les règles absentes (R-xx) et
 les anomalies manquées (A-x). Ne recopie pas leur énoncé.
