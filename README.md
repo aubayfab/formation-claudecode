@@ -6,7 +6,7 @@ TypeScript strict, Vite, Vitest et Prettier. Aucun framework de rendu : tout est
 
 ## Prérequis
 
-Node 20.19 ou plus récent.
+Node 26 LTS, ou à défaut 24.22.1 ou 22.23.4 au minimum (contrainte de l'Inspector MCP du TP 15).
 
 ## Commandes
 

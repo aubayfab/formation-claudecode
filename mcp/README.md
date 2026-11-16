@@ -18,5 +18,6 @@ Serveur stdio, à déclarer depuis la racine du projet :
 claude mcp add --transport stdio --scope project arcade-devkit -- node mcp/serveur-scores.js
 ```
 
-Relancez Claude Code et approuvez le serveur. Dans `/mcp`, `arcade-devkit` doit apparaître
-connecté, avec quatre outils.
+Dans le panneau VS Code, ouvrez une nouvelle conversation : Claude Code lance le serveur sans
+demander d'approbation. Dans le terminal, lancez `claude` et approuvez le serveur. Tapez ensuite
+`/mcp` et vérifiez qu'`arcade-devkit` est connecté, avec quatre outils.
