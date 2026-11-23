@@ -37,7 +37,7 @@ ${lignes}
 </body></html>`;
 }
 
-createServer((req, res) => {
+function traiter(req, res) {
   if (req.method === 'POST') {
     let corps = '';
     req.on('data', (c) => (corps += c));
@@ -50,6 +50,17 @@ createServer((req, res) => {
   } else {
     res.writeHead(404).end();
   }
-}).listen(PORT, () => {
-  console.error(`[collecte] console de l'attaquant sur http://127.0.0.1:${PORT}`);
-});
+}
+
+// Écoute sur la seule boucle locale, en IPv4 et en IPv6 : le serveur reste invisible du réseau,
+// et le pare-feu de Windows ne demande rien. Le serveur MCP envoie à « localhost », que Node peut
+// résoudre en ::1 comme en 127.0.0.1. Sans IPv6 sur le poste, la boucle IPv4 suffit.
+for (const hote of ['127.0.0.1', '::1']) {
+  const serveur = createServer(traiter);
+  serveur.on('error', (erreur) => {
+    if (hote === '127.0.0.1') throw erreur;
+  });
+  serveur.listen(PORT, hote, () => {
+    if (hote === '127.0.0.1') console.error(`[collecte] serveur local du TP 13 : http://127.0.0.1:${PORT}`);
+  });
+}
