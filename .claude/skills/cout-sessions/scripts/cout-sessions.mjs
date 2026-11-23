@@ -4,8 +4,9 @@
 // Claude Code enregistre chaque session dans <config>/projects/<dossier du projet>/<session>.jsonl, et
 // les sous-agents dans <session>/subagents/*.jsonl. Chaque réponse du modèle porte son « usage » (tokens).
 // À la fin d'une session, Claude Code ajoute une entrée « cost-state » : son coût total, sous-agents
-// compris, au tarif public de l'API. Tant qu'une session reste ouverte, cette entrée n'existe pas : le
-// script affiche alors ses tokens, sans coût.
+// compris, au tarif public de l'API. Une session se termine par /exit dans le terminal, par /clear dans
+// l'extension VS Code ; ouvrir une nouvelle conversation ne la termine pas. Tant qu'une session reste
+// ouverte, cette entrée n'existe pas : le script affiche alors ses tokens, sans coût.
 //
 // Usage : node cout-sessions.mjs <id de la session courante> [nombre de sessions, 8 par défaut]
 // <config> vaut $CLAUDE_CONFIG_DIR, ou ~/.claude.
@@ -182,7 +183,9 @@ sessions.forEach((s, i) => {
   );
 });
 console.log(
-  '\nCoût : enregistré par Claude Code à la fin de chaque session, sous-agents compris, au tarif public de l’API.',
+  '\nCoût : Claude Code l’enregistre à la fin de chaque session, sous-agents compris, au tarif public de l’API. ' +
+    'Pour clore une session : /exit dans le terminal, /clear dans l’extension VS Code. ' +
+    'Si vous ouvrez une nouvelle conversation sans clore la précédente, son coût reste « non enregistré ».',
 );
 console.log(
   'Contexte à la fin : tokens de la dernière requête de la session principale, sans ceux des sous-agents.',
