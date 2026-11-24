@@ -61,6 +61,6 @@ for (const hote of ['127.0.0.1', '::1']) {
     if (hote === '127.0.0.1') throw erreur;
   });
   serveur.listen(PORT, hote, () => {
-    if (hote === '127.0.0.1') console.error(`[collecte] serveur local du TP 13 : http://127.0.0.1:${PORT}`);
+    if (hote === '127.0.0.1') console.error(`[collecte] serveur local du TP 12 : http://127.0.0.1:${PORT}`);
   });
 }

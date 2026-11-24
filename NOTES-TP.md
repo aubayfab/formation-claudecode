@@ -83,7 +83,7 @@ Problèmes rencontrés :
 
 Problèmes rencontrés :
 
-# TP N°7 – Un prompt digne de ce nom
+# TP N°6 – Un prompt digne de ce nom
 
 > Copiez ici votre prompt amélioré :
 
@@ -91,7 +91,7 @@ Problèmes rencontrés :
 
 Problèmes rencontrés :
 
-# TP N°8 – Des actions approuvées
+# TP N°7 – Des actions approuvées
 
 > À la vérification initiale, quel outil chaque demande d’accord affichait-elle ?
 
@@ -101,7 +101,7 @@ Problèmes rencontrés :
 
 Problèmes rencontrés :
 
-# TP N°9 – Un spécialiste
+# TP N°8 – Un spécialiste
 
 > Collez ici le bloc rendu par /check-report pour vos deux rapports :
 
@@ -122,7 +122,7 @@ Problèmes rencontrés :
 
 Problèmes rencontrés :
 
-# TP N°10 – Une équipe de professionnels
+# TP N°9 – Une équipe de professionnels
 
 > Collez ici le bloc rendu par /check-report pour le livrable de l’équipe :
 
@@ -147,7 +147,7 @@ Problèmes rencontrés :
 
 Problèmes rencontrés :
 
-# TP N°11 – Des scripts sur évènements
+# TP N°10 – Des scripts sur évènements
 
 > Quels évènements déclenchent les hooks ?
 
@@ -161,7 +161,7 @@ Problèmes rencontrés :
 
 Problèmes rencontrés :
 
-# TP N°12 – Des compétences spécifiques
+# TP N°11 – Des compétences spécifiques
 
 > Comment s’est comporté le modèle dans ses estimations ? Les couleurs ont-elles été respectées ou dénaturées ?
 
@@ -171,7 +171,7 @@ Problèmes rencontrés :
 
 Problèmes rencontrés :
 
-# TP N°13 – Un agent sous influence
+# TP N°12 – Un agent sous influence
 
 > Remarquez-vous quelque chose de particulier ?
 
@@ -187,7 +187,7 @@ Problèmes rencontrés :
 
 Problèmes rencontrés :
 
-# TP N°14 - Les marketplaces
+# TP N°13 - Les marketplaces
 
 > Où se trouve le script rapport-vitest.mjs qui a été exécuté ?
 
@@ -197,7 +197,7 @@ Problèmes rencontrés :
 
 Problèmes rencontrés :
 
-# TP bonus – Une fonctionnalité pilotée par sa spec
+# TP N°14 – Une fonctionnalité pilotée par sa spec
 
 > Chaque choix tranché pendant l’interview figure-t-il dans SPEC.md ? Que deviendrait un choix absent après le /clear de l’étape 3 ?
 
