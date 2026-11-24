@@ -1,3 +1,10 @@
+# Vos réponses aux TP
+
+Répondez sous chaque question (les lignes qui commencent par « > »), au fil des TP. Notez vos
+blocages dans « Problèmes rencontrés ». En fin de formation, les parcours que vous validez
+(fondamentaux, parcours avancé, parcours complet) dépendent de ce seul fichier : un TP sans
+réponse compte comme non fait (slide 3).
+
 # TP N°1 – Prise en main de la borne d’arcade
 
 > Avant d’écrire, que cherche-t-il et quels fichiers lit-il ?
